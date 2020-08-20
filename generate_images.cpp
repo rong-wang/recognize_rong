@@ -9,6 +9,10 @@
 #include <iostream>
 #include <algorithm>
 
+/**
+ * Much of this code is from the opencv facedetect_ex.cpp sample code!
+ **/ 
+
 using namespace std;
 using namespace cv;
 
