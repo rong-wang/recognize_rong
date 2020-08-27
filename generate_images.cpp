@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <algorithm>
-
+    
 /**
  * Much of this code is from the opencv facedetect_ex.cpp sample code!
  **/ 
@@ -22,7 +22,7 @@ const string imagePath("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/
 const int x_offset = 50;
 const int y_offset = 100;
 
-const int numImages = 6000;
+const int numImages = 6;
 
 class CascadeClassifierAdapter : public DetectionBasedTracker::IDetector 
 {
@@ -80,7 +80,7 @@ int main(int , char**)
 
     Mat referenceFrame;
     Mat grayFrame;
-    vector<Rect> faces;
+    std::vector<Rect> faces;
 
     int curimage = 0;
 
@@ -93,6 +93,7 @@ int main(int , char**)
         Mat copy;
 
         for(int i = 0; i < faces.size(); ++i){
+            // crop image to include more face
             try{
                 Rect r;
                 r.x = faces[i].x - x_offset;
@@ -101,6 +102,7 @@ int main(int , char**)
                 r.height = faces[i].height + (2 * y_offset);
                 copy = referenceFrame(r);
                 
+                // save to path
                 imwrite(imagePath + "rong_" + to_string(400 + curimage++) + ".jpg", copy);
             }
             catch(...){ }
