@@ -19,7 +19,9 @@ namespace fs = std::filesystem;
 
 const std::string pathToFaces("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/faces/test/rong");
 const std::string faceLandmarkDat("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/shape_predictor_68_face_landmarks.dat");
-const std::string dest("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/faces/aligned/rong/");
+const std::string destination("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/faces/aligned/rong/");
+
+void alignFaces(std::string path, std::string dest, frontal_face_detector &detector, shape_predictor &sp);
 
 int main(int argc, char **argv)
 {
@@ -28,11 +30,20 @@ int main(int argc, char **argv)
     shape_predictor sp;
     deserialize(faceLandmarkDat) >> sp;
 
+    alignFaces(pathToFaces, destination, detector, sp);
+    alignFaces("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/faces/training/notrong", 
+                "C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/faces/aligned/notrong/", detector, sp);
+
+    return 0;
+}
+
+void alignFaces(std::string path, std::string dest, frontal_face_detector &detector, shape_predictor &sp)
+{
     image_window win, win_face;
     int count = 0;
 
     // loop through files in a directory
-    for (const auto &file : fs::directory_iterator(pathToFaces))
+    for (const auto &file : fs::directory_iterator(path))
     {
         array2d<rgb_pixel> img;
         load_image(img, file.path().string());
@@ -61,6 +72,7 @@ int main(int argc, char **argv)
             cv::Mat cvImg = toMat(alignedImg);
             cv::imwrite(dest + "face_" + std::to_string(count++) + ".jpg", cvImg);
         }
+
+        if(count > 10) break;
     }
-    return 0;
 }
