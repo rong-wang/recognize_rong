@@ -1,3 +1,4 @@
+// -10 points, where's your header? 
 #include <dlib/image_processing/frontal_face_detector.h>
 #include <dlib/image_processing/render_face_detections.h>
 #include <dlib/image_processing.h>
@@ -12,17 +13,19 @@
 #include <filesystem>
 #include <string>
 
-
+// -100: Poor style! never use namespace. 
 using namespace dlib;
 
 namespace fs = std::filesystem;
 
+// -10000: these paths are hardcodes smh. 
 const std::string pathToFaces("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/faces/test/rong");
 const std::string faceLandmarkDat("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/shape_predictor_68_face_landmarks.dat");
 const std::string destination("C:/Users/rongw/Documents/Code/VSCode_C++/recognize_rong/faces/aligned/rong/");
 
 void alignFaces(std::string path, std::string dest, frontal_face_detector &detector, shape_predictor &sp);
 
+// -10 points for no function header! 
 int main(int argc, char **argv)
 {
     frontal_face_detector detector = get_frontal_face_detector();
